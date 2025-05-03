@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="google-site-verification" content="google76dd3b6c1421560c.html" />
+  <meta name="description" content="متجر اليـوبي يقدم أحدث وأفضل ألعاب PS4 و PS5 بأسعار منافسة وجودة أصلية، مع إمكانية الطلب والدفع عبر الواتساب بسهولة." />
+  <meta name="keywords" content="ألعاب, PS4, PS5, متجر ألعاب, بلايستيشن, ألعاب أصلية, شراء ألعاب, متجر اليـوبي" />
+  <meta name="author" content="متجر اليـوبي" />
+  <meta property="og:title" content="متجر اليـوبي لألعاب PS4 و PS5" />
+  <meta property="og:description" content="أحدث ألعاب بلايستيشن بجودة أصلية وأسعار مميزة. اطلب الآن وادفع عبر الواتساب." />
+  <meta property="og:image" content="https://your-site.com/images/logo.png" />
+  <meta property="og:url" content="https://your-site.com" />
+  <meta name="robots" content="index, follow" />
+  <title>متجر اليـوبي لألعاب PS4 و PS5</title>
+  <link rel="icon" href="https://your-site.com/images/favicon.png" type="image/png">
+  <style>
+    body {
+      font-family: 'Tahoma', sans-serif;
+      background-color: #f4f7fa;
+      margin: 0;
+      padding-top: 100px;
+    }
+    header {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100%;
+      background-color: #1c3faa;
+      color: #fff;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+    }
+    header .logo img {
+      height: 60px;
+    }
+    nav a {
+      margin: 0 10px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .hero {
+      background: linear-gradient(to right, #4e73df, #1c3faa);
+      text-align: center;
+      padding: 50px;
+      color: #fff;
+    }
+    .search-box {
+      text-align: center;
+      margin: 20px;
+    }
+    .search-box input {
+      padding: 10px;
+      width: 80%;
+      max-width: 400px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+    .product {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+    .product:hover {
+      transform: translateY(-5px);
+    }
+    .product img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    .product button {
+      margin-top: 10px;
+      background: #ff9800;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background 0.3s ease;
+    }
+    .product button:hover {
+      background: #f57c00;
+    }
+    .cart, .contact-section {
+      padding: 20px;
+      background: #fff;
+      margin: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    footer {
+      background: #1c3faa;
+      color: #fff;
+      text-align: center;
+      padding: 15px;
+    }
+  </style>
+  <script>
+    let cart = [];
+
+    function addToCart(name, price) {
+      const existingItem = cart.find(item => item.name === name);
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        cart.push({ name, price, quantity: 1 });
+      }
+      updateCart();
+    }
+
+    function updateCart() {
+      const cartList = document.getElementById('cart-items');
+      const totalElem = document.getElementById('cart-total');
+      cartList.innerHTML = '';
+      let total = 0;
+      cart.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `${item.name} - ${item.price} ريال (الكمية: ${item.quantity})`;
+        cartList.appendChild(li);
+        total += item.price * item.quantity;
+      });
+      totalElem.textContent = `الإجمالي: ${total} ريال`;
+    }
+
+    function checkout() {
+      if (!validateCheckout()) return;
+
+      const name = document.getElementById('customer-name').value;
+      const city = document.getElementById('customer-city').value;
+      const address = document.getElementById('customer-address').value;
+      const phone = document.getElementById('customer-phone').value;
+
+      let msg = `طلب جديد من: %0Aالاسم: ${name}%0Aالمدينة: ${city}%0Aالعنوان: ${address}%0Aالجوال: ${phone}%0A%0Aالمنتجات:%0A`;
+      cart.forEach(item => msg += `- ${item.name} (الكمية: ${item.quantity}) (${item.price * item.quantity} ريال)%0A`);
+
+      window.open(`https://wa.me/966561374978?text=${msg}`, '_blank');
+    }
+
+    function validateCheckout() {
+      const name = document.getElementById('customer-name').value;
+      const city = document.getElementById('customer-city').value;
+      const address = document.getElementById('customer-address').value;
+      const phone = document.getElementById('customer-phone').value;
+
+      if (!name || !city || !address || !phone) {
+        alert('يرجى تعبئة جميع الحقول.');
+        return false;
+      }
+      if (cart.length === 0) {
+        alert('يرجى إضافة منتجات إلى السلة.');
+        return false;
+      }
+      return true;
+    }
+
+    document.getElementById('searchBox').addEventListener('input', function() {
+      let filter = this.value.toLowerCase();
+      let products = document.querySelectorAll('.product');
+      products.forEach(function(product) {
+        let title = product.querySelector('h3').textContent.toLowerCase();
+        if (title.includes(filter)) {
+          product.style.display = '';
+        } else {
+          product.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="https://your-site.com/images/logo.png" alt="شعار المتجر">
+    </div>
+    <nav>
+      <a href="#">الرئيسية</a>
+      <a href="#products">المنتجات</a>
+      <a href="#contact">تواصل معنا</a>
+    </nav>
+  </header>
+  <section class="hero">
+    <h1>أهلاً بكم في متجر اليـوبي لألعاب بلايستيشن</h1>
+    <p>اكتشف أحدث ألعاب PS4 و PS5 بأسعار مناسبة وجودة مضمونة.</p>
+  </section>
+  <section class="search-box">
+    <input type="text" id="searchBox" placeholder="ابحث عن لعبة...">
+  </section>
+  <section class="products" id="products">
+    <div class="product">
+      <img src="https://your-site.com/images/resident-evil4.jpg" alt="Resident Evil 4">
+      <h3>Resident Evil 4 - PS5</h3>
+      <p>لعبة رعب مذهلة</p>
+      <button onclick="addToCart('Resident Evil 4 - PS5', 270)">أضف إلى السلة</button>
+    </div>
+    <div class="product">
+      <img src="https://your-site.com/images/spiderman2.jpg" alt="Spider-Man 2">
+      <h3>Spider-Man 2 - PS5</h3>
+      <p>مغامرات مذهلة مع الرجل العنكبوت</p>
+      <button onclick="addToCart('Spider-Man 2 - PS5', 299)">أضف إلى السلة</button>
+    </div>
+    <div class="product">
+      <img src="https://your-site.com/images/fifa24.jpg" alt="FIFA 24">
+      <h3>FIFA 24 - PS5</h3>
+      <p>أفضل تجربة كروية</p>
+      <button onclick="addToCart('FIFA 24 - PS5', 250)">أضف إلى السلة</button>
+    </div>
+  </section>
+  <section class="cart">
+    <h2>السلة</h2>
+    <ul id="cart-items"></ul>
+    <p id="cart-total">الإجمالي: 0 ريال</p>
+  </section>
+  <section class="contact-section" id="contact">
+    <h2>معلومات العميل</h2>
+    <input type="text" id="customer-name" placeholder="الاسم الكامل">
+    <input type="text" id="customer-city" placeholder="المدينة">
+    <input type="text" id="customer-address" placeholder="العنوان الكامل">
+    <input type="text" id="customer-phone" placeholder="رقم الجوال">
+    <button onclick="checkout()">إتمام الطلب عبر واتساب</button>
+  </section>
+  <footer>
+    &copy; 2025 متجر اليـوبي - جميع الحقوق محفوظة
+  </footer>
+</body>
+</html>
